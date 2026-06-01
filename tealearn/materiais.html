@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tea Learn — Meus Materiais</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <a href="index.html" class="side-btn side-user" aria-label="Login">L</a>
+      <a href="dashboard.html" class="side-btn side-home" aria-label="Home">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      </a>
+      <a href="materiais.html" class="side-btn side-books" aria-label="Materiais">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>
+      </a>
+    </aside>
+
+    <div class="content">
+      <main class="main">
+        <header class="app-header">
+          <h1 class="page-title">Meus Materiais</h1>
+          <div class="tl-badge" aria-label="Tea Learn">TL</div>
+        </header>
+
+        <section class="panel">
+          <div class="filter-wrap">
+            <button class="btn-filter" id="filter-btn">Filtrar</button>
+            <div class="dropdown" id="filter-dropdown"></div>
+          </div>
+
+          <div class="grid" id="materials-grid"></div>
+
+          <div class="upload">
+            <h3>Enviar Material</h3>
+            <p class="hint">Aceita: .txt, .pdf, .docx</p>
+            <input type="file" id="file-input" accept=".txt,.pdf,.docx" hidden />
+            <button class="btn-primary" id="file-pick">Selecionar arquivo</button>
+            <p class="file-name" id="file-name" hidden></p>
+            <p class="error" id="file-error" hidden></p>
+          </div>
+        </section>
+      </main>
+
+      <footer class="footer">© Tea Learn — feito com calma</footer>
+    </div>
+  </div>
+
+  <script src="js/materiais.js"></script>
+</body>
+</html>
