@@ -1,2 +1,3 @@
-27/04 - Adicionei protótipo da primeira tela do sistema e estou organizando/planejando
-o que vou fazer
+27/04 - Adicionei protótipo da primeira tela do sistema e estou organizando/planejando o que vou fazer
+---
+03/05 - Terminei os protótipos das telas
