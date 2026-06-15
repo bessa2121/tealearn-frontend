@@ -1,58 +1,68 @@
-import { createContext, useContext, useState } from "react";
+import {
+  createContext,
+  useEffect,
+  useState,
+} from "react";
 
-type User = {
-  id: number;
-  name: string;
-  email: string;
-};
+import { storage } from "@/utils/storage";
 
-type AuthContextType = {
-  user: User | null;
-  token: string | null;
-  login: (token: string, user: User) => void;
+interface AuthContextType {
+  isAuthenticated: boolean;
+  loading: boolean;
+  login: (token: string) => void;
   logout: () => void;
-};
+}
 
-const AuthContext = createContext<AuthContextType>(
-  {} as AuthContextType
-);
+export const AuthContext =
+  createContext({} as AuthContextType);
 
 export function AuthProvider({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const [token, setToken] = useState<string | null>(
-    localStorage.getItem("token")
-  );
+  const [
+    isAuthenticated,
+    setIsAuthenticated,
+  ] = useState(false);
 
-  const [user, setUser] = useState<User | null>(() => {
-    const savedUser = localStorage.getItem("user");
+  const [loading, setLoading] =
+    useState(true);
 
-    return savedUser ? JSON.parse(savedUser) : null;
-  });
+  useEffect(() => {
+    const token =
+      storage.getToken();
 
-  function login(token: string, user: User) {
-    localStorage.setItem("token", token);
-    localStorage.setItem("user", JSON.stringify(user));
+    setIsAuthenticated(
+      !!token
+    );
 
-    setToken(token);
-    setUser(user);
+    setLoading(false);
+  }, []);
+
+  function login(
+    token: string
+  ) {
+    storage.setToken(token);
+
+    setIsAuthenticated(
+      true
+    );
   }
 
   function logout() {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
+    storage.removeToken();
 
-    setToken(null);
-    setUser(null);
+    setIsAuthenticated(
+      false
+    );
   }
 
   return (
     <AuthContext.Provider
       value={{
-        user,
-        token,
+        isAuthenticated,
+        loading,
         login,
         logout,
       }}
@@ -60,8 +70,4 @@ export function AuthProvider({
       {children}
     </AuthContext.Provider>
   );
-}
-
-export function useAuth() {
-  return useContext(AuthContext);
 }
