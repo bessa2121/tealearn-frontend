@@ -8,6 +8,10 @@ import {
 } from "lucide-react";
 
 import {
+  useLoading,
+} from "@/contexts/LoadingContext";
+
+import {
   useEffect,
   useState,
 } from "react";
@@ -45,6 +49,10 @@ const [generatingPdf,
   const [previewingPdf,
   setPreviewingPdf] =
   useState(false);
+
+  const {
+  hideLoader,
+} = useLoading();
 
   const navigate =
     useNavigate();
@@ -123,6 +131,7 @@ const [generatingPdf,
     console.error(error);
   } finally {
     setLoading(false);
+      hideLoader();
   }
 }
 

@@ -7,6 +7,10 @@ export const api = axios.create({
 
 api.interceptors.request.use(
   (config) => {
+    window.dispatchEvent(
+      new Event("show-loader")
+    );
+
     const token =
       storage.getToken();
 
@@ -16,5 +20,31 @@ api.interceptors.request.use(
     }
 
     return config;
+  },
+
+  (error) => {
+    window.dispatchEvent(
+      new Event("hide-loader")
+    );
+
+    return Promise.reject(error);
+  }
+);
+
+api.interceptors.response.use(
+  (response) => {
+    window.dispatchEvent(
+      new Event("hide-loader")
+    );
+
+    return response;
+  },
+
+  (error) => {
+    window.dispatchEvent(
+      new Event("hide-loader")
+    );
+
+    return Promise.reject(error);
   }
 );

@@ -10,6 +10,10 @@ import {
 } from "@/providers/theme-provider";
 
 import {
+  LoadingProvider,
+} from "@/contexts/LoadingContext";
+
+import {
   AuthProvider,
 } from "@/contexts/AuthContext";
 
@@ -30,13 +34,17 @@ ReactDOM.createRoot(
 
       <BrowserRouter>
 
-        <AuthProvider>
+        <LoadingProvider>
 
-          <App />
+  <AuthProvider>
 
-          <Toaster richColors />
+    <App />
 
-        </AuthProvider>
+    <Toaster richColors />
+
+  </AuthProvider>
+
+</LoadingProvider>
 
       </BrowserRouter>
 

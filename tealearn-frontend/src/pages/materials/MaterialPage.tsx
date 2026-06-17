@@ -3,6 +3,7 @@ import {
   FileText,
   Sparkles,
   Search,
+  Loader2,
 } from "lucide-react";
 
 import {
@@ -66,6 +67,12 @@ export function MaterialPage() {
   const [materials,
     setMaterials] =
     useState<Material[]>([]);
+
+    const [openingMaterial,
+setOpeningMaterial] =
+useState<number | null>(
+  null
+);
 
   const [loading,
     setLoading] =
@@ -619,17 +626,41 @@ useEffect(() => {
 
                   </div>
 
-                  <Button
-                    variant="outline"
-                    className="rounded-2xl"
-                    onClick={() =>
-                      navigate(
-                        `/materials/${material.id}`
-                      )
-                    }
-                  >
-                    Ver detalhes
-                  </Button>
+       <Button
+  variant="outline"
+  className="rounded-2xl"
+  disabled={
+    openingMaterial === material.id
+  }
+  onClick={() => {
+
+    setOpeningMaterial(
+      material.id
+    );
+
+    navigate(
+      `/materials/${material.id}`
+    );
+  }}
+>
+  {
+    openingMaterial === material.id
+      ? (
+        <>
+          <Loader2
+            className="
+              mr-2
+              h-4
+              w-4
+              animate-spin
+            "
+          />
+          Abrindo...
+        </>
+      )
+      : "Ver detalhes"
+  }
+</Button>
 
                 </div>
               )
