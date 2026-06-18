@@ -23,10 +23,10 @@ export function GlobalLoader() {
         flex items-center
         justify-center
 
-        bg-white/70
+       bg-background/70
         backdrop-blur-sm
 
-        dark:bg-slate-950/70
+        
       "
     >
       <div

@@ -10,8 +10,7 @@ export function FullScreenLoader() {
         items-center
         justify-center
         gap-4
-        bg-slate-50
-        dark:bg-slate-900
+        bg-background
       "
     >
       <div
@@ -44,7 +43,7 @@ export function FullScreenLoader() {
 
       <p
         className="
-          text-slate-500
+          text-muted-foreground
         "
       >
         Carregando...

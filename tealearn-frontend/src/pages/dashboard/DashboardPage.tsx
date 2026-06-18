@@ -105,7 +105,7 @@ export function DashboardPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-slate-50 p-8">
+    <div className="min-h-screen p-8">
 
       {/* Hero */}
       <div
@@ -120,12 +120,12 @@ export function DashboardPage() {
         "
       >
         <div className="max-w-2xl">
-          <h1 className="text-4xl font-bold text-slate-800">
+          <h1 className="text-4xl font-bold text-foreground">
             Bem-vindo ao
             TeaLearn 👋
           </h1>
 
-          <p className="mt-3 text-lg text-slate-600">
+          <p className="mt-3 text-lg text-muted-foreground">
             Plataforma de
             aprendizagem adaptativa
             para estudantes com TEA.
@@ -137,10 +137,10 @@ export function DashboardPage() {
               Novo Material
             </Button>
 
-            <Button
-              variant="outline"
-              className="rounded-2xl bg-white"
-            >
+           <Button
+  variant="outline"
+  className="rounded-2xl"
+>
               <Sparkles className="mr-2 h-5 w-5" />
               Gerar IA
             </Button>
@@ -156,24 +156,23 @@ export function DashboardPage() {
               item.icon;
 
             return (
-              <Card
-                key={item.title}
-                className="
-                  rounded-[28px]
-                  border-none
-                  bg-white p-6
-                  shadow-sm transition
-                  hover:-translate-y-1
-                  hover:shadow-md
-                "
-              >
+             <Card
+  className="
+    rounded-[28px]
+    p-6
+    shadow-sm
+    transition
+    hover:-translate-y-1
+    hover:shadow-md
+  "
+>
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm text-slate-500">
+                    <p className="text-sm text-muted-foreground">
                       {item.title}
                     </p>
 
-                    <h2 className="mt-2 text-3xl font-bold text-slate-800">
+                  <h2 className="mt-2 text-3xl font-bold text-foreground">
                       {item.value}
                     </h2>
                   </div>
@@ -197,15 +196,15 @@ export function DashboardPage() {
       <div className="mt-8 grid gap-6 lg:grid-cols-3">
 
         {/* Recent Materials */}
-        <Card className="rounded-[30px] border-none p-6 shadow-sm lg:col-span-2">
+        <Card className="rounded-[30px] p-6 shadow-sm lg:col-span-2">
 
           <div className="mb-6 flex items-center justify-between">
             <div>
-              <h2 className="text-xl font-semibold text-slate-800">
+              <h2 className="text-xl font-semibold text-foreground">
                 Materiais recentes
               </h2>
 
-              <p className="text-sm text-slate-500">
+              <p className="text-sm text-muted-foreground">
                 Últimos conteúdos adicionados
               </p>
             </div>
@@ -223,23 +222,23 @@ export function DashboardPage() {
               (material) => (
                 <div
                   key={material.name}
-                  className="
-                    flex items-center
-                    justify-between
-                    rounded-3xl
-                    border border-slate-200
-                    bg-slate-50 p-5
-                    transition
-                    hover:border-sky-200
-                    hover:bg-sky-50
-                  "
+                className="
+  flex items-center
+  justify-between
+  rounded-3xl
+  border border-border
+  bg-card
+  p-5
+  transition
+  hover:bg-muted
+"
                 >
                   <div>
-                    <p className="font-semibold text-slate-700">
+                   <p className="font-semibold text-foreground">
                       {material.name}
                     </p>
 
-                    <span className="text-sm text-slate-500">
+                    <span className="text-sm text-muted-foreground">
                       {material.type}
                     </span>
                   </div>
@@ -257,11 +256,11 @@ export function DashboardPage() {
         <Card className="rounded-[30px] border-none p-6 shadow-sm">
 
           <div className="mb-5">
-            <h2 className="text-xl font-semibold text-slate-800">
+            <h2 className="text-xl font-semibold text-foreground">
               Ações rápidas
             </h2>
 
-            <p className="text-sm text-slate-500">
+            <p className="text-sm text-muted-foreground">
               Acesse rapidamente
             </p>
           </div>

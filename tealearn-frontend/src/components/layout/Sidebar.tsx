@@ -36,14 +36,36 @@ export function Sidebar() {
   const { logout } = useAuth();
 
   return (
-    <aside className="flex h-screen w-72 flex-col border-r border-slate-200 bg-white px-5 py-6">
+   <aside
+  className="
+    flex h-screen w-72 flex-col
+    border-r border-slate-200
+    bg-white
+    px-5 py-6
+
+    dark:border-slate-800
+    dark:bg-slate-950
+  "
+>
       {/* Logo */}
       <div className="mb-10">
-        <h1 className="text-3xl font-bold tracking-tight text-slate-800">
+        <h1
+  className="
+    text-3xl font-bold tracking-tight
+    text-slate-800
+    dark:text-slate-100
+  "
+>
           Tea<span className="text-blue-400">Learn</span>
         </h1>
 
-        <p className="mt-1 text-sm text-slate-500">
+      <p
+  className="
+    mt-1 text-sm
+    text-slate-500
+    dark:text-slate-400
+  "
+>
           Plataforma Adaptativa
         </p>
       </div>
@@ -57,17 +79,30 @@ export function Sidebar() {
             <NavLink
               key={item.path}
               to={item.path}
-              className={({ isActive }) =>
-                `
-                flex items-center gap-3 rounded-2xl px-4 py-3
-                text-sm font-medium transition-all
-                ${
-                  isActive
-                    ? "bg-blue-100 text-blue-700"
-                    : "text-slate-600 hover:bg-slate-100"
-                }
-              `
-              }
+             className={({ isActive }) =>
+  `
+  flex items-center gap-3 rounded-2xl px-4 py-3
+  text-sm font-medium transition-all
+
+  ${
+    isActive
+      ? `
+        bg-blue-100
+        text-blue-700
+
+        dark:bg-blue-900/30
+        dark:text-blue-300
+      `
+      : `
+        text-slate-600
+        hover:bg-slate-100
+
+        dark:text-slate-300
+        dark:hover:bg-slate-800
+      `
+  }
+`
+}
             >
               <Icon size={20} />
               {item.label}
@@ -80,10 +115,16 @@ export function Sidebar() {
       <button
         onClick={logout}
         className="
-          flex items-center gap-3 rounded-2xl
-          px-4 py-3 text-sm font-medium
-          text-red-500 transition hover:bg-red-50
-        "
+  flex items-center gap-3 rounded-2xl
+  px-4 py-3 text-sm font-medium
+
+  text-red-500
+  transition
+
+  hover:bg-red-50
+
+  dark:hover:bg-red-900/20
+"
       >
         <LogOut size={18} />
         Sair

@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
 import { createMaterial } from "@/services/modules/material.service";
+
 import { toast } from "sonner";
 
 interface Props {
@@ -22,6 +23,7 @@ interface Props {
 export function CreateMaterialModal({
   onSuccess,
 }: Props) {
+
   const [open, setOpen] =
     useState(false);
 
@@ -35,7 +37,23 @@ export function CreateMaterialModal({
     useState(false);
 
   async function handleSubmit() {
+
+    if (!title.trim()) {
+      toast.error(
+        "Digite um título"
+      );
+      return;
+    }
+
+    if (!text.trim()) {
+      toast.error(
+        "Digite o conteúdo"
+      );
+      return;
+    }
+
     try {
+
       setLoading(true);
 
       await createMaterial({
@@ -49,16 +67,21 @@ export function CreateMaterialModal({
       setOpen(false);
 
       toast.success(
-  "Material criado!"
-);
+        "Material criado!"
+      );
+
       onSuccess();
+
     } catch (error) {
+
       console.error(error);
 
       toast.error(
-  "Erro ao criar material"
-);
+        "Erro ao criar material"
+      );
+
     } finally {
+
       setLoading(false);
     }
   }
@@ -68,20 +91,27 @@ export function CreateMaterialModal({
       open={open}
       onOpenChange={setOpen}
     >
+
       <DialogTrigger asChild>
+
         <Button className="rounded-2xl">
           Novo Material
         </Button>
+
       </DialogTrigger>
 
       <DialogContent className="rounded-[32px]">
+
         <DialogHeader>
+
           <DialogTitle>
             Criar Material
           </DialogTitle>
+
         </DialogHeader>
 
         <div className="space-y-4">
+
           <Input
             placeholder="Título"
             value={title}
@@ -105,17 +135,20 @@ export function CreateMaterialModal({
 
           <Button
             className="w-full rounded-2xl"
-            onClick={
-              handleSubmit
-            }
+            onClick={handleSubmit}
             disabled={loading}
           >
-            {loading
-              ? "Criando..."
-              : "Criar material"}
+            {
+              loading
+                ? "Criando..."
+                : "Criar material"
+            }
           </Button>
+
         </div>
+
       </DialogContent>
+
     </Dialog>
   );
 }

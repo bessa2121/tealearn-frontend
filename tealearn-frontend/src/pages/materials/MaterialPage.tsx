@@ -11,10 +11,6 @@ import {
 } from "react-router-dom";
 
 import {
-  ThemeToggle,
-} from "@/components/theme/ThemeToggle";
-
-import {
   useEffect,
   useState,
 } from "react";
@@ -203,13 +199,10 @@ useEffect(() => {
 }, [search]);
 
   return (
-  <div
+<div
   className="
     min-h-screen
-    bg-slate-50
-    dark:bg-slate-900
     p-8
-    transition-colors
   "
 >
 {/* Header */}
@@ -219,8 +212,7 @@ useEffect(() => {
     <h1
       className="
         text-4xl font-bold
-        text-slate-800
-        dark:text-slate-100
+        text-foreground
       "
     >
       Materiais Didáticos
@@ -228,8 +220,7 @@ useEffect(() => {
 
     <p
       className="
-        mt-2 text-slate-500
-        dark:text-slate-400
+        mt-2 text-muted-foreground
       "
     >
       Gerencie conteúdos para adaptação TEA
@@ -237,8 +228,6 @@ useEffect(() => {
   </div>
 
   <div className="flex items-center gap-3">
-
-    <ThemeToggle />
 
     <UploadPdfModal
       onSuccess={refreshPageData}
@@ -256,11 +245,10 @@ useEffect(() => {
 <div
   className="
     mb-8 rounded-[32px]
-    border border-slate-200
-    bg-white p-5
+    border p-5
     shadow-sm
-    dark:border-slate-800
-    dark:bg-slate-900
+    bg-card
+border-border
   "
 >
 
@@ -286,7 +274,7 @@ useEffect(() => {
           absolute left-4 top-1/2
           h-4 w-4
           -translate-y-1/2
-          text-slate-400
+          text-muted-foreground
         "
       />
 
@@ -314,15 +302,13 @@ useEffect(() => {
       e.target.value
     )
   }
-  className="
-    h-12 min-w-[170px]
-    rounded-2xl
-    border border-slate-200
-    bg-white px-4
-    text-sm font-medium
-    dark:border-slate-700
-    dark:bg-slate-950
-  "
+ className="
+  h-12 min-w-[170px]
+  rounded-2xl
+  border border-border
+  bg-card px-4
+  text-sm font-medium
+"
 >
   <option value="">
     Todos tipos
@@ -345,15 +331,13 @@ useEffect(() => {
       e.target.value
     )
   }
-  className="
-    h-12 min-w-[170px]
-    rounded-2xl
-    border border-slate-200
-    bg-white px-4
-    text-sm font-medium
-    dark:border-slate-700
-    dark:bg-slate-950
-  "
+ className="
+  h-12 min-w-[170px]
+  rounded-2xl
+  border border-border
+  bg-card px-4
+  text-sm font-medium
+"
 >
   <option value="">
     Todos status
@@ -376,15 +360,13 @@ useEffect(() => {
       e.target.value
     )
   }
-  className="
-    h-12 min-w-[170px]
-    rounded-2xl
-    border border-slate-200
-    bg-white px-4
-    text-sm font-medium
-    dark:border-slate-700
-    dark:bg-slate-950
-  "
+ className="
+  h-12 min-w-[170px]
+  rounded-2xl
+  border border-border
+  bg-card px-4
+  text-sm font-medium
+"
 >
   <option value="">
     Qualquer data
@@ -435,11 +417,11 @@ useEffect(() => {
 
             <div>
 
-              <p className="text-sm text-slate-500">
+              <p className="text-sm text-muted-foreground">
                 Total Materiais
               </p>
 
-              <h2 className="mt-2 text-3xl font-bold text-slate-800">
+              <h2 className="mt-2 text-3xl font-bold text-foreground">
                 {stats ? (
                   stats.totalMaterials
                 ) : (
@@ -463,11 +445,11 @@ useEffect(() => {
 
             <div>
 
-              <p className="text-sm text-slate-500">
+              <p className="text-sm text-muted-foreground">
                 PDFs enviados
               </p>
 
-              <h2 className="mt-2 text-3xl font-bold text-slate-800">
+              <h2 className="mt-2 text-3xl font-bold text-foreground">
                 {stats ? (
                   stats.pdfMaterials
                 ) : (
@@ -491,11 +473,11 @@ useEffect(() => {
 
             <div>
 
-              <p className="text-sm text-slate-500">
+              <p className="text-sm text-muted-foreground">
                 Materiais adaptados
               </p>
 
-              <h2 className="mt-2 text-3xl font-bold text-slate-800">
+              <h2 className="mt-2 text-3xl font-bold text-foreground">
                 {stats ? (
                   stats.adaptedMaterials
                 ) : (
@@ -519,11 +501,11 @@ useEffect(() => {
 
             <div>
 
-              <p className="text-sm text-slate-500">
+              <p className="text-sm text-muted-foreground">
                 Total adaptações
               </p>
 
-              <h2 className="mt-2 text-3xl font-bold text-slate-800">
+              <h2 className="mt-2 text-3xl font-bold text-foreground">
                 {stats ? (
                   stats.totalAdaptations
                 ) : (
@@ -547,11 +529,11 @@ useEffect(() => {
 
         <div className="mb-6">
 
-          <h2 className="text-2xl font-semibold text-slate-800">
+          <h2 className="text-2xl font-semibold text-foreground">
             Materiais
           </h2>
 
-          <p className="text-sm text-slate-500">
+          <p className="text-sm text-muted-foreground">
             Conteúdos enviados pelo professor
           </p>
 
@@ -567,11 +549,10 @@ useEffect(() => {
 
               <div
                 key={index}
-                className="
+      className="
   rounded-3xl
-  border border-slate-200
-  bg-slate-50
-  dark:bg-slate-950
+  border border-border
+  bg-card
   p-5
 "
               >
@@ -582,7 +563,7 @@ useEffect(() => {
 
           ) : materials.length === 0 ? (
 
-            <p className="text-slate-500">
+            <p className="text-muted-foreground">
               Nenhum material encontrado
             </p>
 
@@ -593,29 +574,29 @@ useEffect(() => {
 
                 <div
                   key={material.id}
-                  className="
-                    flex items-center
-                    justify-between
-                    rounded-3xl
-                    border border-slate-200
-                    bg-slate-50 p-5
-                    transition
-                    hover:border-sky-200
-                    hover:bg-sky-50
-                  "
+                className="
+  flex items-center
+  justify-between
+  rounded-3xl
+  border border-border
+  bg-card
+  p-5
+  transition
+  hover:border-sky-200
+  hover:bg-accent
+"
                 >
 
                   <div>
 
                     <h3 className="
   font-semibold
-  text-slate-800
-  dark:text-slate-100
+  text-foreground
 ">
                       {material.title}
                     </h3>
 
-                    <p className="text-sm text-slate-500">
+                    <p className="text-sm text-muted-foreground">
                       Criado em{" "}
                       {new Date(
                         material.createdAt
