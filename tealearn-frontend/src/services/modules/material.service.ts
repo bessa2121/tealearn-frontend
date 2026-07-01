@@ -122,13 +122,17 @@ export async function generatePdf(
 ) {
 
   const response =
-    await api.post(
-      `/materials/${materialId}/pdf`,
-      null,
-      {
+   await api.post(
+    `/materials/${materialId}/pdf`,
+    null,
+    {
         responseType: "blob",
-      }
-    );
+
+        headers: {
+            Accept: "application/pdf",
+        },
+    }
+);
 
   return response.data;
 }

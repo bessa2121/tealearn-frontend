@@ -252,10 +252,16 @@ async function handlePreviewPdf() {
         blob
       );
 
-    window.open(
-      url,
-      "_blank"
+    const newWindow =
+window.open();
+
+if (newWindow) {
+    newWindow.location.href = url;
+} else {
+    toast.error(
+        "O navegador bloqueou a abertura do PDF."
     );
+}
 
     toast.success(
       "PDF aberto!"
