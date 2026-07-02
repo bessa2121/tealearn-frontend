@@ -32,6 +32,42 @@ const menuItems = [
   },
 ];
 
+// Cores inspiradas no espectro autista (as mesmas do "Learn" original)
+const puzzleLetters = [
+  { char: "L", color: "#3B82F6" },
+  { char: "e", color: "#EF4444" },
+  { char: "a", color: "#EAB308" },
+  { char: "r", color: "#22C55E" },
+  { char: "n", color: "#8B5CF6" },
+];
+
+// Silhueta de peça de quebra-cabeça (4 encaixes arredondados)
+const PUZZLE_PATH =
+  "M20,20 L40,20 C40,10 45,5 50,5 C55,5 60,10 60,20 L80,20 L80,40 C90,40 95,45 95,50 C95,55 90,60 80,60 L80,80 L60,80 C60,90 55,95 50,95 C45,95 40,90 40,80 L20,80 L20,60 C10,60 5,55 5,50 C5,45 10,40 20,40 Z";
+
+function PuzzleLetter({ char, color }: { char: string; color: string }) {
+  return (
+    <span
+      className="
+        relative -ml-1.5 first:ml-0
+        inline-flex h-8 w-8
+        items-center justify-center
+      "
+    >
+      <svg
+        viewBox="0 0 100 100"
+        className="absolute inset-0 h-full w-full drop-shadow-sm"
+        aria-hidden="true"
+      >
+        <path d={PUZZLE_PATH} fill={color} />
+      </svg>
+      <span className="relative z-10 text-base font-extrabold text-white">
+        {char}
+      </span>
+    </span>
+  );
+}
+
 export function Sidebar() {
   const { logout } = useAuth();
 
@@ -51,12 +87,19 @@ export function Sidebar() {
       <div className="mb-10">
         <h1
   className="
+    flex items-center
     text-3xl font-bold tracking-tight
     text-slate-800
     dark:text-slate-100
   "
 >
-          Tea<span className="text-blue-400">Learn</span>
+
+          TEA
+          <span className="ml-1 flex items-center">
+            {puzzleLetters.map((l) => (
+              <PuzzleLetter key={l.char} char={l.char} color={l.color} />
+            ))}
+          </span>
         </h1>
 
       <p
