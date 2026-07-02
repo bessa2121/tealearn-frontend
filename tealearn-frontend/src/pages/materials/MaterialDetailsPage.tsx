@@ -25,8 +25,7 @@ import {
   getMaterialById,
   adaptMaterial,
   generatePdf,
-  getAdaptationHistory,
-  getLatestAdaptation,
+  getAdaptationHistory,  
 } from "@/services/modules/material.service";
 
 import type {
@@ -104,28 +103,26 @@ const [generatingPdf,
     );
 
     const historyResponse =
-      await getAdaptationHistory(
-        Number(id)
-      );
+  await getAdaptationHistory(
+    Number(id)
+  );
 
-    setHistory(
-      historyResponse
-    );
+setHistory(historyResponse);
 
-    // carregar última adaptação
-    try {
-      const adaptation =
-        await getLatestAdaptation(
-          Number(id)
-        );
+if (historyResponse.length > 0) {
+  const latest =
+    historyResponse[0];
 
-      setAdaptedText(
-        adaptation.adaptedText
-      );
-    } catch {
-      // sem adaptação ainda
-      setAdaptedText("");
-    }
+  setAdaptedText(
+    latest.adaptedText
+  );
+
+  setSelectedAdaptationId(
+    latest.id
+  );
+} else {
+  setAdaptedText("");
+}
 
   } catch (error) {
     console.error(error);
@@ -139,52 +136,63 @@ const [generatingPdf,
   }, [id]);
 
   async function handleAdapt() {
-    try {
-      if (!id) return;
+  try {
+    if (!id) return;
 
-      setAdapting(true);
+    setAdapting(true);
 
-      const response =
-        await adaptMaterial(
-          Number(id),
-          supportLevel
-        );
+    // 1. cria a adaptação
+    await adaptMaterial(
+      Number(id),
+      supportLevel
+    );
 
-      setAdaptedText(
-  response.adaptedText
-);
+    // 2. busca o histórico atualizado
+    const historyResponse =
+      await getAdaptationHistory(
+        Number(id)
+      );
 
-const historyResponse =
-  await getAdaptationHistory(
-    Number(id)
-  );
+    setHistory(historyResponse);
 
-setHistory(
-  historyResponse
-);
+    const latest =
+      historyResponse[0];
 
-const latest =
-  historyResponse[0];
+    if (latest) {
+      setSelectedAdaptationId(latest.id);
 
-if (latest) {
-  setSelectedAdaptationId(
-    latest.id
-  );
-}
+      setAdaptedText(latest.adaptedText);
 
-toast.success(
-  "Material adaptado com sucesso!"
-);
-    } catch (error) {
-      console.error(error);
+      setMaterial(prev =>
+        prev
+          ? {
+              ...prev,
+              adaptationsCount: historyResponse.length,
+              hasAdaptation: true,
+              latestAdaptationPreview: latest.preview,
+            }
+          : prev
+      );
+
+      window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: "smooth",
+      });
+    }
+
+    toast.success(
+      "Material adaptado com sucesso!"
+    );
+  } catch (error) {
+    console.error(error);
 
     toast.error(
-  "Erro ao adaptar material"
-);
-    } finally {
-      setAdapting(false);
-    }
+      "Erro ao adaptar material"
+    );
+  } finally {
+    setAdapting(false);
   }
+}
 
   async function handleGeneratePdf() {
   try {
@@ -192,10 +200,16 @@ toast.success(
 
     setGeneratingPdf(true);
 
-    const blob =
-      await generatePdf(
-        Number(id)
-      );
+  console.log(
+  "selectedAdaptationId",
+  selectedAdaptationId
+);
+
+const blob =
+  await generatePdf(
+    Number(id),
+    selectedAdaptationId ?? undefined
+  );
 
     const url =
       window.URL.createObjectURL(
@@ -242,11 +256,16 @@ async function handlePreviewPdf() {
       true
     );
 
-    const blob =
-      await generatePdf(
-        Number(id)
-      );
+ console.log(
+  "selectedAdaptationId",
+  selectedAdaptationId
+);
 
+const blob =
+  await generatePdf(
+    Number(id),
+    selectedAdaptationId ?? undefined
+  );
     const url =
       window.URL.createObjectURL(
         blob

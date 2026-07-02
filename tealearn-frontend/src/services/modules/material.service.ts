@@ -118,21 +118,29 @@ export async function adaptMaterial(
 }
 
 export async function generatePdf(
-  materialId: number
+  materialId: number,
+  adaptationId?: number
 ) {
 
-  const response =
-   await api.post(
+  console.log("SERVICE TS");
+  console.log({
+    materialId,
+    adaptationId,
+  });
+
+  const response = await api.post(
     `/materials/${materialId}/pdf`,
     null,
     {
-        responseType: "blob",
-
-        headers: {
-            Accept: "application/pdf",
-        },
+      params: {
+        adaptationId,
+      },
+      responseType: "blob",
+      headers: {
+        Accept: "application/pdf",
+      },
     }
-);
+  );
 
   return response.data;
 }
@@ -144,18 +152,6 @@ export async function getAdaptationHistory(
   const response =
     await api.get(
       `/materials/${materialId}/adaptations`
-    );
-
-  return response.data;
-}
-
-export async function getLatestAdaptation(
-  materialId: number
-) {
-
-  const response =
-    await api.get(
-      `/materials/${materialId}/adaptation`
     );
 
   return response.data;
