@@ -2,7 +2,6 @@ import {
   BookOpen,
   Brain,
   TrendingUp,
-  PlusCircle,
   Sparkles,
   FileBarChart,
   FileText,
