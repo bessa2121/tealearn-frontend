@@ -20,6 +20,15 @@ import {
 
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
+
+import {
+  CreateMaterialModal,
+} from "@/components/materials/CreateMaterialModal";
+
+import {
+  UploadPdfModal,
+} from "@/components/materials/UploadPdfModal";
 
 export function DashboardPage() {
 
@@ -28,27 +37,27 @@ const [dashboard, setDashboard] =
     null
   );
 
+const navigate = useNavigate();
+
+async function refreshDashboard() {
+  setLoadingStats(true);
+
+  try {
+    const response = await getDashboardStats();
+    setDashboard(response);
+  } finally {
+    setLoadingStats(false);
+  }
+}
+
   const [
     loadingStats,
     setLoadingStats,
   ] = useState(true);
 
   useEffect(() => {
-    async function loadStats() {
-      try {
-        const response =
-          await getDashboardStats();
-
-        setDashboard(response);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoadingStats(false);
-      }
-    }
-
-    loadStats();
-  }, []);
+    refreshDashboard();
+}, []);
 
   const dashboardCards = [
     {
@@ -106,8 +115,7 @@ const [dashboard, setDashboard] =
       >
         <div className="max-w-2xl">
           <h1 className="text-4xl font-bold text-foreground">
-            Bem-vindo ao
-            TeaLearn 👋
+            Bem-vindo, {dashboard?.user.name} 👋
           </h1>
 
           <p className="mt-3 text-lg text-muted-foreground">
@@ -117,18 +125,21 @@ const [dashboard, setDashboard] =
           </p>
 
           <div className="mt-6 flex gap-4">
-            <Button className="rounded-2xl">
-              <PlusCircle className="mr-2 h-5 w-5" />
-              Novo Material
-            </Button>
+           <CreateMaterialModal
+  onSuccess={refreshDashboard}
+/>
+<UploadPdfModal
+  onSuccess={refreshDashboard}
+/>
 
-           <Button
-  variant="outline"
-  className="rounded-2xl"
+      <Button
+variant="outline"
+className="rounded-2xl"
+onClick={() => navigate("/materials?generate=true")}
 >
-              <Sparkles className="mr-2 h-5 w-5" />
-              Gerar IA
-            </Button>
+    <Sparkles className="mr-2 h-5 w-5"/>
+    Gerar IA
+</Button>
           </div>
         </div>
       </div>
@@ -141,7 +152,7 @@ const [dashboard, setDashboard] =
               item.icon;
 
             return (
-             <Card
+             <Card key={item.title}
   className="
     rounded-[28px]
     p-6
@@ -194,45 +205,60 @@ const [dashboard, setDashboard] =
               </p>
             </div>
 
-            <Button
-              variant="outline"
-              className="rounded-2xl"
-            >
-              Ver todos
-            </Button>
+           <Button
+variant="outline"
+className="rounded-2xl"
+onClick={() => navigate("/materials")}
+>
+    Ver todos
+</Button>
           </div>
 
           <div className="space-y-4">
-            {dashboard?.recentMaterials.map(
+            {dashboard?.recentMaterials?.map(
               (material) => (
                 <div
-                  key={material.id}
-                className="
-  flex items-center
-  justify-between
-  rounded-3xl
-  border border-border
-  bg-card
-  p-5
-  transition
-  hover:bg-muted
+key={material.id}
+onClick={() =>
+    navigate(`/materials/${material.id}`)
+}
+className="
+group
+cursor-pointer
+flex
+items-center
+justify-between
+rounded-3xl
+border
+border-border
+bg-card
+p-5
+transition-all
+duration-200
+hover:-translate-y-0.5
+hover:border-sky-300
+hover:bg-sky-50/40
 "
-                >
+>
                   <div>
                    <p className="font-semibold text-foreground">
                       {material.title}
                     </p>
 
                     <span className="text-sm text-muted-foreground">
-                      {material.adapted
-  ? "Material adaptado"
-  : "Sem adaptação"}
-                    </span>
+  {material.adapted
+    ? "✓ Adaptado"
+    : "Pendente de adaptação"}
+</span>
                   </div>
 
-                  <BookOpen
-                    className="text-slate-400"
-                  />
+                 <BookOpen
+  className="
+    text-slate-400
+    transition-colors
+    group-hover:text-sky-500
+  "
+/>
                 </div>
               )
             )}
@@ -254,26 +280,29 @@ const [dashboard, setDashboard] =
 
           <div className="flex flex-col gap-4">
 
-            <Button className="h-14 justify-start rounded-3xl">
-              <PlusCircle className="mr-2 h-5 w-5" />
-              Novo Material
-            </Button>
+           <UploadPdfModal
+  onSuccess={refreshDashboard}
+/>
+           <Button
+  variant="secondary"
+  className="h-14 justify-start rounded-3xl"
+  onClick={() => navigate("/materials")}
+>
+  <Sparkles className="mr-2 h-5 w-5" />
+  Gerar Adaptação IA
+</Button>
 
-            <Button
-              variant="secondary"
-              className="h-14 justify-start rounded-3xl"
-            >
-              <Sparkles className="mr-2 h-5 w-5" />
-              Gerar Adaptação IA
-            </Button>
-
-            <Button
-              variant="outline"
-              className="h-14 justify-start rounded-3xl"
-            >
-              <FileBarChart className="mr-2 h-5 w-5" />
-              Relatórios
-            </Button>
+       <Button
+  variant="outline"
+  disabled
+  className="h-14 justify-start rounded-3xl"
+>
+  <FileBarChart className="mr-2 h-5 w-5" />
+  Relatórios
+  <span className="ml-auto text-xs">
+    Em breve
+  </span>
+</Button>
 
           </div>
         </Card>
