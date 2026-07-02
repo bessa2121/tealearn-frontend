@@ -15,33 +15,18 @@ import {
 
 import {
   getDashboardStats,
-  type DashboardStats,
+  type DashboardResponse,
 } from "@/services/modules/dashboard.service";
 
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
-const recentMaterials = [
-  {
-    name: "Matemática Básica",
-    type: "Exercícios adaptados",
-  },
-  {
-    name: "Leitura Interativa",
-    type: "Conteúdo visual",
-  },
-  {
-    name: "Atividades Sensoriais",
-    type: "Aprendizagem TEA",
-  },
-];
-
 export function DashboardPage() {
 
-  const [stats, setStats] =
-    useState<DashboardStats | null>(
-      null
-    );
+const [dashboard, setDashboard] =
+  useState<DashboardResponse | null>(
+    null
+  );
 
   const [
     loadingStats,
@@ -54,7 +39,7 @@ export function DashboardPage() {
         const response =
           await getDashboardStats();
 
-        setStats(response);
+        setDashboard(response);
       } catch (error) {
         console.error(error);
       } finally {
@@ -70,7 +55,7 @@ export function DashboardPage() {
       title: "Materiais",
       value: loadingStats
         ? "..."
-        : stats?.totalMaterials ?? "0",
+        : dashboard?.stats?.totalMaterials ?? "0",
       icon: BookOpen,
       color:
         "bg-sky-100 text-sky-600",
@@ -79,7 +64,7 @@ export function DashboardPage() {
       title: "Adaptações",
       value: loadingStats
         ? "..."
-        : stats?.totalAdaptations ?? "0",
+        : dashboard?.stats?.totalAdaptations ?? "0",
       icon: Brain,
       color:
         "bg-violet-100 text-violet-600",
@@ -88,7 +73,7 @@ export function DashboardPage() {
       title: "PDFs enviados",
       value: loadingStats
         ? "..."
-        : stats?.pdfMaterials ?? "0",
+        : dashboard?.stats?.pdfMaterials ?? "0",
       icon: FileText,
       color:
         "bg-emerald-100 text-emerald-600",
@@ -97,7 +82,7 @@ export function DashboardPage() {
       title: "Materiais adaptados",
       value: loadingStats
         ? "..."
-        : stats?.adaptedMaterials ?? "0",
+        : dashboard?.stats?.adaptedMaterials ?? "0",
       icon: TrendingUp,
       color:
         "bg-amber-100 text-amber-600",
@@ -218,10 +203,10 @@ export function DashboardPage() {
           </div>
 
           <div className="space-y-4">
-            {recentMaterials.map(
+            {dashboard?.recentMaterials.map(
               (material) => (
                 <div
-                  key={material.name}
+                  key={material.id}
                 className="
   flex items-center
   justify-between
@@ -235,11 +220,13 @@ export function DashboardPage() {
                 >
                   <div>
                    <p className="font-semibold text-foreground">
-                      {material.name}
+                      {material.title}
                     </p>
 
                     <span className="text-sm text-muted-foreground">
-                      {material.type}
+                      {material.adapted
+  ? "Material adaptado"
+  : "Sem adaptação"}
                     </span>
                   </div>
 
