@@ -32,7 +32,7 @@ import {
 } from "@/services/modules/dashboard.service";
 
 import type {
-  DashboardStats,
+  DashboardResponse,
 } from "@/services/modules/dashboard.service";
 
 import type {
@@ -74,11 +74,8 @@ useState<number | null>(
     setLoading] =
     useState(true);
 
-  const [stats,
-    setStats] =
-    useState<DashboardStats | null>(
-      null
-    );
+const [dashboard, setDashboard] =
+useState<DashboardResponse | null>(null);
 
   const [search,
     setSearch] =
@@ -157,7 +154,7 @@ await getDashboardStats({
     dateFilter || undefined,
 });
 
-    setStats(response);
+    setDashboard(response);
 
   } catch (error) {
 
@@ -422,8 +419,8 @@ border-border
               </p>
 
               <h2 className="mt-2 text-3xl font-bold text-foreground">
-                {stats ? (
-                  stats.totalMaterials
+                {dashboard ? (
+                  dashboard?.stats?.totalMaterials
                 ) : (
                   <Skeleton className="h-8 w-16 rounded-xl" />
                 )}
@@ -450,8 +447,8 @@ border-border
               </p>
 
               <h2 className="mt-2 text-3xl font-bold text-foreground">
-                {stats ? (
-                  stats.pdfMaterials
+                {dashboard ? (
+                  dashboard?.stats?.pdfMaterials
                 ) : (
                   <Skeleton className="h-8 w-16 rounded-xl" />
                 )}
@@ -478,8 +475,8 @@ border-border
               </p>
 
               <h2 className="mt-2 text-3xl font-bold text-foreground">
-                {stats ? (
-                  stats.adaptedMaterials
+                {dashboard ? (
+                  dashboard?.stats?.adaptedMaterials
                 ) : (
                   <Skeleton className="h-8 w-16 rounded-xl" />
                 )}
@@ -506,8 +503,8 @@ border-border
               </p>
 
               <h2 className="mt-2 text-3xl font-bold text-foreground">
-                {stats ? (
-                  stats.totalAdaptations
+                {dashboard ? (
+                  dashboard?.stats?.totalAdaptations
                 ) : (
                   <Skeleton className="h-8 w-16 rounded-xl" />
                 )}
